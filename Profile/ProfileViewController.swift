@@ -7,8 +7,25 @@
 
 import UIKit
 
-class ProfileViewController: UIViewController {
+var profileHeaderView = ProfileHeaderView()
 
+class ProfileViewController: UIViewController {
+    
+     
+     override func viewDidLoad() {
+         super.viewDidLoad()
+         view.backgroundColor = .lightGray
+         view.addSubview(profileHeaderView)
+     }
+     
+     override func viewWillLayoutSubviews() {
+         
+         super.viewWillLayoutSubviews()
+         profileHeaderView.frame = view.safeAreaLayoutGuide.layoutFrame
+         
+     }
+}
+    /* с предыдущей домашки
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
         print(#function)
@@ -26,7 +43,8 @@ class ProfileViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        view.backgroundColor = .systemMint
+        view.backgroundColor = .lightGray
+        view.addSubview(profileHeaderView)
         print(#function)
         makeBarItem()
     }
@@ -48,6 +66,7 @@ class ProfileViewController: UIViewController {
     }
     override func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()
+        profileHeaderView.frame = view.safeAreaLayoutGuide.layoutFrame
         print(#function)
     }
     
@@ -77,3 +96,4 @@ class ProfileViewController: UIViewController {
 }
 
 
+*/
