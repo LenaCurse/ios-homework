@@ -7,23 +7,23 @@
 
 import UIKit
 
-var profileHeaderView = ProfileHeaderView()
+
 
 class ProfileViewController: UIViewController {
     
-     
-     override func viewDidLoad() {
-         super.viewDidLoad()
-         view.backgroundColor = .lightGray
-         view.addSubview(profileHeaderView)
-     }
-     
-     override func viewWillLayoutSubviews() {
-         
-         super.viewWillLayoutSubviews()
-         profileHeaderView.frame = view.safeAreaLayoutGuide.layoutFrame
-         
-     }
+
+  var profileHV = ProfileHeaderView()
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        view.backgroundColor = .systemGray6
+        profileHV.backgroundColor = .lightGray
+        viewWillLayoutSubviews()
+    }
+    override func viewWillLayoutSubviews() {
+        profileHV.frame = view.safeAreaLayoutGuide.layoutFrame
+        view.addSubview(profileHV)
+    }
+    
 }
     /* с предыдущей домашки
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
