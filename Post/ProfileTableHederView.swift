@@ -1,12 +1,10 @@
 //
-//  ProfileHeaderView.swift
+//  ProfileTableHederView.swift
 //  Navigation
 //
-//  Created by Elena on 15.05.2022.
+//  Created by Elena on 22.05.2022.
 //
 
-
-import Foundation
 import UIKit
 
 class ProfileHeaderView: UIView {
@@ -156,3 +154,5 @@ class ProfileHeaderView: UIView {
     }
     
 }
+
+
