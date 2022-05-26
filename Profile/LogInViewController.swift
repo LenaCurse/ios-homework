@@ -15,7 +15,6 @@ class LogInViewController: UIViewController {
         navigationController?.navigationBar.isHidden = true
         setupLayuot()
         hideKeyboardTapperAround()
-        
         logTextField.delegate = self
         passwordTextField.delegate = self
     }
@@ -54,8 +53,6 @@ class LogInViewController: UIViewController {
         logTF.textColor = .black
         logTF.autocapitalizationType = .none
         logTF.tintColor = .lightGray
-
-        
         logTF.leftView = UIView(frame: CGRect(x: 0, y: 10, width: 10, height: logTF.frame.height))
         logTF.leftViewMode = .always
 
@@ -208,12 +205,3 @@ extension LogInViewController: UITextFieldDelegate {
     }
     
 }
-
-
-
-
-
-
-
-
-
