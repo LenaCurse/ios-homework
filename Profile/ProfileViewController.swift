@@ -7,93 +7,63 @@
 
 import UIKit
 
-
-
 class ProfileViewController: UIViewController {
     
-
-  var profileHV = ProfileHeaderView()
+    
+    let profileHeaderView = ProfileHeaderView()
+    
+    let newButton: UIButton = {
+        
+        let buttonNew = UIButton()
+        buttonNew.setTitle("New Cat Post", for: .normal)
+        buttonNew.backgroundColor = .systemBlue
+        
+        return buttonNew
+    } ()
+    
+    
     override func viewDidLoad() {
-        super.viewDidLoad()
+          super.viewDidLoad()
+          view.backgroundColor = .systemGray6
+          setupAutoLayuot()
+          setupNavigationController()
+          
+      }
+    
+    private func setupNavigationController (){
+        
+        let navigationBar = UINavigationBarAppearance()
+        navigationBar.backgroundColor = .white
+        self.navigationController?.navigationBar.standardAppearance = navigationBar
+        self.navigationController?.navigationBar.scrollEdgeAppearance = navigationBar
         view.backgroundColor = .systemGray6
-        profileHV.backgroundColor = .lightGray
-        viewWillLayoutSubviews()
-    }
-    override func viewWillLayoutSubviews() {
-        profileHV.frame = view.safeAreaLayoutGuide.layoutFrame
-        view.addSubview(profileHV)
+        
     }
     
-}
-    /* с предыдущей домашки
-    override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
-        super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
-        print(#function)
-    }
-    
-    required init?(coder: NSCoder) {
-        super .init(coder: coder)
-    }
-    
-    override func loadView() {
-        super.loadView()
-        print(#function)
-    }
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-
-        view.backgroundColor = .lightGray
+    private func setupAutoLayuot (){
+        
         view.addSubview(profileHeaderView)
-        print(#function)
-        makeBarItem()
-    }
-    
-    private func makeBarItem(){
-        let barItem = UIBarButtonItem(title: "Продолжить", style: .plain, target: self, action: #selector(tapAction))
-        navigationItem.rightBarButtonItem = barItem
-    }
-    
-    @objc private func tapAction (){
-        let vc = InfoViewController()
-        vc.title = "Новый"
-        navigationController?.pushViewController(vc, animated: true)
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        print(#function)
-    }
-    override func viewWillLayoutSubviews() {
-        super.viewWillLayoutSubviews()
-        profileHeaderView.frame = view.safeAreaLayoutGuide.layoutFrame
-        print(#function)
-    }
-    
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
-        print(#function)
-    }
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        print(#function)
-    }
-    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
-        super.viewWillTransition(to: size, with: coordinator)
-        print(#function)
-    }
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        print(#function)
-    }
-    override func viewDidDisappear(_ animated: Bool) {
-        super.viewDidDisappear(animated)
-        print(#function)
-    }
-    deinit {
-        print(#function)
+        view.addSubview(newButton)
+        
+        profileHeaderView.translatesAutoresizingMaskIntoConstraints.self = false
+        newButton.translatesAutoresizingMaskIntoConstraints.self = false
+        
+        NSLayoutConstraint.activate([
+            
+         
+            
+            profileHeaderView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            profileHeaderView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            profileHeaderView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+            profileHeaderView.heightAnchor.constraint(equalToConstant: 220),
+            
+           
+            
+            newButton.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            newButton.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            newButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
+            newButton.heightAnchor.constraint(equalToConstant: 40)
+        ])
     }
 }
-
-
-*/
+  

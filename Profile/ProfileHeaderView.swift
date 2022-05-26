@@ -5,42 +5,43 @@
 //  Created by Elena on 15.05.2022.
 //
 
+
+import Foundation
 import UIKit
 
 class ProfileHeaderView: UIView {
     
     private var statusText: String?
     
-    
     override init(frame: CGRect) {
         super.init(frame: frame)
-        addSubview(image)
-        addSubview(setupButton)
-        addSubview(nameLable)
-        addSubview(text)
-        addSubview(textField)
-        
+        setupLayuot()
     }
+    
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    private var image: UIImageView = {
+    
+    private var avatarImageView: UIImageView = {
         
         let imageView = UIImageView(image: UIImage(named: "cat"))
-        imageView.layer.frame = CGRect(x: 16, y: 16, width: 110, height: 110)
+        imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.layer.cornerRadius = 55
         imageView.layer.borderWidth = 3
         imageView.layer.borderColor = UIColor.white.cgColor
         imageView.clipsToBounds = true
         imageView.contentMode = .scaleAspectFill
-        
         return imageView
     } ()
     
-    private lazy var setupButton: UIButton = {
+    
+  
+    
+    private var setStatusButton: UIButton = {
         
-        let button = UIButton(frame:CGRect(x: 16, y: image.frame.maxY + 16, width: UIScreen.main.bounds.width - 34, height: 50))
+        let button = UIButton()
+        button.translatesAutoresizingMaskIntoConstraints = false
         button.backgroundColor = .systemBlue
         button.tintColor = .systemRed
         button.setTitle("Status Meow", for: .normal)
@@ -53,39 +54,42 @@ class ProfileHeaderView: UIView {
         button.layer.shadowColor = UIColor.black.cgColor
         
        
-        button.addTarget(self, action: #selector(buttonPressed), for: .touchUpInside)
-        
+        button.addTarget(self, action: #selector(buttonStatus), for: .touchUpInside)
         return button
     }()
     
-    private var nameLable: UILabel = {
+    
+   
+    
+    private var fullNameLable: UILabel = {
         
-        let label = UILabel(frame: CGRect(x: 140, y: 27, width: 120, height: 30))
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
         label.text = "Cute cat"
         label.font = UIFont.systemFont(ofSize: 18, weight: .bold)
         label.textColor = .black
-
-            return label
+        return label
         
     }()
-      
+    
    
     
-    private lazy var text: UITextView = {
+    private var statusView: UITextView = {
         
-        let textView = UITextView (frame: CGRect(x: 135, y: nameLable.frame.maxY + 3 , width: 170, height: 28))
+        let textView = UITextView ()
+        textView.translatesAutoresizingMaskIntoConstraints = false
         textView.text = "Waiting for something"
         textView.backgroundColor = .clear
         textView.textColor = .gray
         textView.font = UIFont.systemFont(ofSize: 14, weight: .regular)
-
         return textView
     }()
-        
     
+   
     
-      lazy var textField: UITextField = {
-          let fieldText = UITextField(frame: CGRect(x: 130, y: text.frame.maxY + 5 , width: 170, height: 40))
+    private var statusTextField: UITextField = {
+        let fieldText = UITextField()
+        fieldText.translatesAutoresizingMaskIntoConstraints = false
         fieldText.text = ""
         fieldText.backgroundColor = .white
         fieldText.layer.cornerRadius = 12
@@ -99,15 +103,56 @@ class ProfileHeaderView: UIView {
     }()
     
     
-    @objc private func buttonPressed() {
-      
-        text.text = statusText
-        print(text.text ?? "")
+    @objc private func buttonStatus() {
+        
+        statusView.text = statusText
+        print(statusView.text ?? "")
     }
     
     @objc private func statusTextChanged() {
         
-        statusText = textField.text ?? ""
-        }
+        statusText = statusTextField.text ?? ""
+    }
+    
+    
+  
+    
+    private func setupLayuot (){
+        [avatarImageView, setStatusButton, fullNameLable, statusView, statusTextField ].forEach {self.addSubview($0)}
+        NSLayoutConstraint.activate([
+            
+           
+            avatarImageView.topAnchor.constraint(equalTo: self.safeAreaLayoutGuide.topAnchor, constant: 16),
+            avatarImageView.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 16),
+            avatarImageView.widthAnchor.constraint(equalToConstant: 110),
+            avatarImageView.heightAnchor.constraint(equalToConstant: 110),
+            
+            setStatusButton.topAnchor.constraint(equalTo: avatarImageView.bottomAnchor, constant: 16),
+            setStatusButton.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 16 ),
+            setStatusButton.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -16),
+            setStatusButton.heightAnchor.constraint(equalToConstant: 50),
+            
+          
+            
+            fullNameLable.topAnchor.constraint(equalTo: self.safeAreaLayoutGuide.topAnchor, constant: 27),
+            fullNameLable.leadingAnchor.constraint(equalTo: avatarImageView.trailingAnchor, constant: 16),
+           
+            
+            statusView.bottomAnchor.constraint(equalTo: statusTextField.topAnchor, constant: -6),
+            statusView.leadingAnchor.constraint(equalTo: avatarImageView.trailingAnchor, constant: 16),
+            statusView.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -16),
+            statusView.heightAnchor.constraint(equalToConstant: 30),
+            
+            
+           
+            
+            statusTextField.bottomAnchor.constraint(equalTo: setStatusButton.topAnchor, constant: -16),
+            statusTextField.leadingAnchor.constraint(equalTo: avatarImageView.trailingAnchor, constant: 16),
+            statusTextField.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -16),
+            statusTextField.heightAnchor.constraint(equalToConstant: 40)
+            
+        ])
+        
+    }
     
 }
