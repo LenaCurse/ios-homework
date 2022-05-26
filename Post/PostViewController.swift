@@ -8,32 +8,36 @@
 import UIKit
 
 class PostViewController: UIViewController {
-
-    var titlePost: String = ""
-     
-
-     
-     override func viewDidLoad() {
-         super.viewDidLoad()
-         view.backgroundColor = .systemTeal
-         self.navigationItem.title = titlePost
-  
-         makeBarItem()
+    
+    var post: Post?
+    
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        view.backgroundColor = .systemTeal
+        makeBarItem()
+        setupController()
+    }
+    
+    
+    private func setupController() {
+        if let post = post {
+            
+            self.title = post.title
+        } else {
+            self.title = "Мой пост"
+        }
         
-     }
-     
-     
-     private func makeBarItem(){
-         let barItem = UIBarButtonItem(title: "Инфо", style: .plain, target: self, action: #selector(tapAction))
-         navigationItem.rightBarButtonItem = barItem
-     }
-     @objc private func tapAction(){
-         let infoViewController = InfoViewController()
-         present(infoViewController, animated: true)
+    }
+    
+    private func makeBarItem(){
+        let barItem = UIBarButtonItem(title: "Инфо", style: .plain, target: self, action: #selector(tapAction))
+        navigationItem.rightBarButtonItem = barItem
+    }
+    @objc private func tapAction(){
+        let infoViewController = InfoViewController()
+        present(infoViewController, animated: true)
 
-     }
+    }
 
-
-     
-
- }
+}
