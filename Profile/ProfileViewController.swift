@@ -4,13 +4,12 @@
 //
 //  Created by Elena on 14.05.2022.
 //
-
 import UIKit
 
 class ProfileViewController: UIViewController {
     
-    private var postModel = PostModel.makePost()
-    private var imageModel = ImageModel.addImage()
+    private lazy var postModel = PostModel.makePost()
+    private lazy var imageModel = ImageModel.addImage()
     
     private lazy var tableView: UITableView = {
         let tableView = UITableView(frame: .zero, style: .grouped)
@@ -26,16 +25,16 @@ class ProfileViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         layout ()
-        
         self.view.backgroundColor = .systemGray6
         hideKeyboardTapperAround()
         
         
-        
+       
         navigationItem.title = "Профиль"
         navigationController?.navigationBar.isHidden = false
     }
     
+
     private func layout () {
         view.addSubview(tableView)
         NSLayoutConstraint.activate([
@@ -58,6 +57,8 @@ extension ProfileViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if indexPath.item != 0 {
             let cell = tableView.dequeueReusableCell(withIdentifier: PostTableViewCell.identifier, for: indexPath) as! PostTableViewCell
+           
+            cell.tapPostImageDelegate = self
             cell.setupCell(postModel[indexPath.row - 1])
             return cell
         } else {
@@ -74,9 +75,7 @@ extension ProfileViewController: UITableViewDataSource {
 
 extension ProfileViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        
         return UITableView.automaticDimension
-        
     }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
@@ -89,9 +88,10 @@ extension ProfileViewController: UITableViewDelegate {
         return section == 0 ? 200:0
     }
     
-
+   
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView .deselectRow(at: indexPath, animated: true)
+
     }
 }
 
@@ -100,10 +100,22 @@ extension ProfileViewController: PhotosTableViewCellDelegate {
         
         let photosViewController = PhotosViewController()
         navigationController?.pushViewController(photosViewController, animated: true)
-        
     }
-
 }
+
+
+
+
+extension ProfileViewController: TapPostImageDelegate {
+    func postImagePressed(author: String, description: String, image: UIImage) {
+        let newView = PostDopViewController()
+        newView.authourLabel.text = author
+        newView.postImageView.image = image
+        newView.descriptionLable.text = description
+        navigationController?.pushViewController(newView, animated: true)
+    }
+}
+
 
 
 extension ProfileViewController: UITextFieldDelegate {
@@ -123,10 +135,12 @@ extension ProfileViewController: UITextViewDelegate {
         view.addGestureRecognizer(press)
     }
     @objc func dismissKeyboard(){
-    
         view.endEditing(true)
     }
 }
+
+
+
 
 
 

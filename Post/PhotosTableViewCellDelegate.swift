@@ -14,10 +14,9 @@ protocol PhotosTableViewCellDelegate: AnyObject {
 class PhotosTableViewCell: UITableViewCell {
     
     weak var delegate: PhotosTableViewCellDelegate?
-    
     let imageModel = ImageModel.addImage()
     
-    
+   
     private lazy var collectionView: UICollectionView = {
         let layoutCollection = UICollectionViewFlowLayout()
         layoutCollection.scrollDirection = .horizontal
@@ -25,13 +24,12 @@ class PhotosTableViewCell: UITableViewCell {
         viewCollection.translatesAutoresizingMaskIntoConstraints = false
         viewCollection.dataSource = self
         viewCollection.delegate = self
-        viewCollection.register(PhotosCollectionViewCellForTableView.self, forCellWithReuseIdentifier: PhotosCollectionViewCellForTableView.identifier)
+        viewCollection.register(PhotosCollectionViewCell.self, forCellWithReuseIdentifier: PhotosCollectionViewCell.identifier)
         return viewCollection
     }()
     
    
-   
-    private  let button: UIButton = {
+    private lazy var button: UIButton = {
         let button = UIButton()
         button.translatesAutoresizingMaskIntoConstraints = false
         button.tintColor = .black
@@ -52,7 +50,6 @@ class PhotosTableViewCell: UITableViewCell {
     @objc private func goToGallery() {
         delegate?.buttonTap()
     }
-    
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -80,11 +77,11 @@ class PhotosTableViewCell: UITableViewCell {
             collectionView.heightAnchor.constraint(equalToConstant: 100),
             collectionView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -12),
             
-            
+           
             labelText.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 12),
             labelText.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 12),
             
-            
+         
             button.centerYAnchor.constraint(equalTo: labelText.centerYAnchor),
             button.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -12)
         ])
@@ -98,7 +95,7 @@ extension PhotosTableViewCell: UICollectionViewDataSource {
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: PhotosCollectionViewCellForTableView.identifier, for: indexPath) as! PhotosCollectionViewCellForTableView
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: PhotosCollectionViewCell.identifier, for: indexPath) as! PhotosCollectionViewCell
         cell.setupImageModel(imageModel[indexPath.item])
         return cell
     }
@@ -107,6 +104,7 @@ extension PhotosTableViewCell: UICollectionViewDataSource {
 
 extension PhotosTableViewCell: UICollectionViewDelegateFlowLayout {
     var sideInset: CGFloat {return 8}
+    
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let height = (collectionView.bounds.width - sideInset * 3) / 4
         return CGSize(width: height, height: height)
@@ -128,5 +126,3 @@ extension PhotosTableViewCell: UICollectionViewDelegateFlowLayout {
         print(indexPath.section, indexPath.item)
     }
 }
-
-
