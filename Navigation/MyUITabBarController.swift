@@ -17,6 +17,7 @@ class MyUITabBarController: UITabBarController {
         super.viewDidLoad()
         view.backgroundColor = .systemGray6
         setupControllers()
+        setupNavigationController()
     }
     
     private func setupControllers (){
@@ -24,12 +25,13 @@ class MyUITabBarController: UITabBarController {
         firstFV.tabBarItem.title = "Лента новостей"
         firstFV.tabBarItem.image = UIImage(systemName: "camera")
         firstFV.navigationItem.title = "Лента новостей"
-        feedViewController.navigationBar.backgroundColor = .systemPurple
+        
         
         let profileViewController = UINavigationController(rootViewController: secondPV)
         secondPV.tabBarItem.title = "Профиль"
         secondPV.tabBarItem.image = UIImage(systemName: "clock")
         secondPV.navigationItem.title = "Профиль"
+        profileViewController.navigationBar.backgroundColor = .systemTeal
         
         let logInViewController = UINavigationController(rootViewController: theThirdLIV)
         theThirdLIV.tabBarItem.title = "Профиль"
@@ -40,4 +42,11 @@ class MyUITabBarController: UITabBarController {
         viewControllers = [feedViewController, logInViewController]
     }
     
+    private func setupNavigationController() {
+        let navBar = UINavigationBarAppearance()
+        navBar.backgroundColor = .white
+        self.navigationController?.navigationBar.standardAppearance = navBar
+        self.navigationController?.navigationBar.scrollEdgeAppearance = navBar
+        view.backgroundColor = .white
+    }
 }
